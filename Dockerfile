@@ -7,4 +7,4 @@ COPY * ./
 RUN pip install -r req.txt
 RUN /usr/bin/crontab crontab.txt
 
-CMD /usr/sbin/crond -f -l 8
+CMD /usr/sbin/crond -f -l 0
