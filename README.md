@@ -27,6 +27,7 @@ To use the script locally:
 ```shell
 python3 bot.py
 ```
+Halp: container broken. Please don't use Docker for now
 To build a Docker container on a server:
 ```shell
 ./run.sh # OR

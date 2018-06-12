@@ -1,10 +1,10 @@
-FROM python:3.6.5-slim-stretch
+FROM python:3.6.5-alpine
 
-RUN mkdir /opt/meh-bot
-WORKDIR /opt/meh-bot
+RUN mkdir /meh-bot
+WORKDIR /meh-bot
 COPY * ./
 
-RUN apt-get update && apt-get -y install firefox
+RUN apk --update add firefox
 RUN pip install -r req.txt
 
 CMD python bot.py
