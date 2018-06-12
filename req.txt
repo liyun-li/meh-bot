@@ -1,4 +1,3 @@
 twilio
 selenium
 python-dotenv
-pyvirtualdisplay

@@ -90,15 +90,14 @@ def meh_function():
         print('Icon already flipped')
     except:
         print('Flipping the flipper')
-        # flipper.click()
+        flipper.click()
     finally: # optional text alert
         SEND_SMS = getenv('SEND_SMS')
         if SEND_SMS:
             print('Texting product...')
-            # send_product_info(browser)
+            send_product_info(browser)
 
     sleep(3)
-    print('Done. Bye')
     browser.quit()
 
 def seconds_till_tomorrow():
@@ -116,5 +115,5 @@ if __name__ == '__main__':
     while True:
         sec = seconds_till_tomorrow()
         print('{} seconds left till tomorrow...'.format(sec))
-        sleep(sec + 9)
+        sleep(sec + 10)
         meh_function()
