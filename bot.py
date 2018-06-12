@@ -5,9 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException as NSE
 
-from datetime import datetime, timedelta
 from twilio.rest import Client
 
+from time import sleep
 from os import getenv
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
@@ -26,7 +26,6 @@ browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
 wait = WebDriverWait(browser, 10)  # maximum wait time
 
 # home page
-HOME = 'https://meh.com/'
 FLIPPER_SELECTOR = 'div[class="flipper"] button'
 FLIPPED_SELECTOR = 'div[class="meh-button flip-container flip"]'
 PRODUCT_SPEC_SELECTOR = 'section[class="features"] ul li'
@@ -40,10 +39,10 @@ SIGNIN_PASS_ID = 'password'
 SIGNIN_BUTTON_SELECTOR = 'button[class="primary"]'
 
 # twilio stuff
-ACCOUNT_SID = getenv('ACCOUNT_SID')
-AUTH_TOKEN = getenv('AUTH_TOKEN')
-TO_NUMBER = getenv('TO_NUMBER')
-FROM_NUMBER = getenv('FROM_NUMBER')
+ACCOUNT_SID = getenv('TWILIO_ACCOUNT_SID')
+AUTH_TOKEN = getenv('TWILIO_AUTH_TOKEN')
+TO_NUMBER = getenv('TWILIO_TO_NUMBER')
+FROM_NUMBER = getenv('TWILIO_FROM_NUMBER')
 
 def send_product_info(browser):
     sms_body = 'Meh:\n'
@@ -58,13 +57,6 @@ def send_product_info(browser):
     )
 
 if __name__ == '__main__':
-    browser.get(HOME)
-    flipper = wait.until(EC.element_to_be_clickable(
-        (By.CSS_SELECTOR, FLIPPER_SELECTOR)
-    ))
-    print('Texting product...')
-    # send_product_info(browser)
-
     browser.get(SIGNIN)
 
     signin_button = wait.until(EC.presence_of_element_located(
@@ -83,23 +75,17 @@ if __name__ == '__main__':
     flipper = wait.until(EC.element_to_be_clickable(
         (By.CSS_SELECTOR, FLIPPER_SELECTOR)
     ))
-    flipped = False
 
     try:
         browser.find_element_by_css_selector(FLIPPED_SELECTOR)
-    except:
-        flipped = True
         print('Icon already flipped')
-
-    if not flipped:
+    except:
         print('Flipping the flipper')
         flipper.click()
+    finally:
+        print('Texting product...')
+        send_product_info(browser)
     
-    try:
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, FLIPPED_SELECTOR)))
-        print('Done')
-    except Exception as e:
-        print('Bug!')
-        print(e)
-
+    sleep(3)
+    print('Done. Bye')
     browser.quit()
