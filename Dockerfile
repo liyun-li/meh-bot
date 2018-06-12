@@ -1,10 +1,9 @@
-FROM python:3.6-alpine
+FROM python:3.6.5-slim-stretch
 
-RUN mkdir meh-bot
-WORKDIR meh-bot
+RUN mkdir /opt/meh-bot
+WORKDIR /opt/meh-bot
 COPY * ./
 
 RUN pip install -r req.txt
-RUN /usr/bin/crontab crontab.txt
 
-CMD /usr/sbin/crond -f -l 0
+CMD python bot.py
