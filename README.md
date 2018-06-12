@@ -24,7 +24,7 @@ To just use the script:
 ```shell
 python3 bot.py # I haven't tested on Python 2 but theoretically it should work
 ```
-To build a Docker container on a server so it texts you every midnight (EST):
+To build a Docker container on a server so it texts you every midnight (EST). If you are in another timezone, please modify ``crontab.txt``:
 ```shell
 ./run.sh # OR
 sh ./run.sh
