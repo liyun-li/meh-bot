@@ -1,10 +1,9 @@
-FROM python:3.6.5-alpine
+FROM spacebar2/python-selenium
 
 RUN mkdir /meh-bot
 WORKDIR /meh-bot
 COPY * ./
 
-RUN apk --update add firefox
-RUN pip install -r req.txt
+RUN pip3 install -r req.txt
 
-CMD python bot.py
+CMD python3 bot.py

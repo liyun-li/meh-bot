@@ -13,8 +13,6 @@ from os.path import exists
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 
-import pytz
-
 env_path = Path('.') / '.env'
 
 if not exists(env_path):
