@@ -9,17 +9,22 @@ from twilio.rest import Client
 
 from time import sleep
 from os import getenv
+from os.path import exists
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
+if not exists('.env'):
+    print('Warning: .env file not found')
+    exit(1)
+
 # set up cursor
 options = Options()
 options.set_headless(True)
 
-options.set_headless(False) # for debugging
+# options.set_headless(False) # for debugging
 browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
 
 # driver wait
@@ -38,13 +43,15 @@ SIGNIN_USER_ID = 'user'
 SIGNIN_PASS_ID = 'password'
 SIGNIN_BUTTON_SELECTOR = 'button[class="primary"]'
 
-# twilio stuff
-ACCOUNT_SID = getenv('TWILIO_ACCOUNT_SID')
-AUTH_TOKEN = getenv('TWILIO_AUTH_TOKEN')
-TO_NUMBER = getenv('TWILIO_TO_NUMBER')
-FROM_NUMBER = getenv('TWILIO_FROM_NUMBER')
 
 def send_product_info(browser):
+    '''Send pics'''
+    # twilio credentials
+    ACCOUNT_SID = getenv('TWILIO_ACCOUNT_SID')
+    AUTH_TOKEN = getenv('TWILIO_AUTH_TOKEN')
+    TO_NUMBER = getenv('TWILIO_TO_NUMBER')
+    FROM_NUMBER = getenv('TWILIO_FROM_NUMBER')
+
     sms_body = 'Meh:\n'
     sms_body += browser.find_element_by_css_selector(PRODUCT_TITLE_SELECTOR).text
     img = browser.find_element_by_id(PRODUCT_PHOTO_ID).get_attribute('src') # 1 photo
@@ -82,10 +89,12 @@ if __name__ == '__main__':
     except:
         print('Flipping the flipper')
         flipper.click()
-    finally:
-        print('Texting product...')
-        send_product_info(browser)
-    
+    finally: # optional text alert
+        SEND_SMS = getenv('SEND_SMS')
+        if SEND_SMS:
+            print('Texting product...')
+            send_product_info(browser)
+
     sleep(3)
     print('Done. Bye')
     browser.quit()
