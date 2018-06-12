@@ -1,8 +1,9 @@
 # meh-bot
-A bot that clicks the spinner on Meh and sends a text message to user.
+A bot that clicks the spinner on Meh and optionally sends a text message to user about their product.
 
 ## Requirement
-You need Twilio service if you want to send a text to your phone (which is just a title and a picture). You also need Docker if you want to containerize the bot. 
+You need Twilio service if you want to send a text to your phone (which is just a title and a picture). 
+You also need Docker if you want to containerize the bot. 
 
 ## Getting Started
 First create a .env file that contains 6 variables.
