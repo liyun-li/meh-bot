@@ -8,7 +8,7 @@ You need Twilio service if you want to send a text to your phone (which is just 
 First create a .env file that contains 6 variables.
 
 * Assign anything other than empty string to ``SEND_SMS`` if you want to activate texting
-* If you choose to activate texting, learn the basics of Twilio and you should be able to fill out ``ACCOUNT\_SID`` and ``AUTH\_TOKEN``
+* If you choose to activate texting, learn the basics of Twilio and you should be able to fill out ``ACCOUNT_SID`` and ``AUTH_TOKEN``
 * ``TWILIO_TO_NUMBER`` and ``TWILIO_FROM_NUMBER`` are the receiver and sender respectively
 * ``MEH_USER`` could be your email address or username
 ```
