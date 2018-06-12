@@ -1,9 +1,12 @@
 # meh-bot
-A pure Python bot that clicks the daily Meh. icon and optionally sends a text message to user about their product.
+A pure Python bot that clicks the daily Meh icon and optionally sends a text message to consumer about their product.
+
+## Sales Pitch
+If you subscribe to Meh, you'd think "Wouldn't it be great if I could check this website every day???", but then you always forget about the site because you're so occupied with other stuff? Well here you go! An automated bot that texts you about your Meh product and clicks the flipper for you so you don't have to visit the site on your own! Meh Bot, your personal clicking assistant. Download now!
 
 ## Requirement
-You need Python and Twilio service if you want to send a text to your phone (which is just a title and a picture). 
-If you hate Docker, use Ubuntu because it's only been tested on it.
+First You need Python. You also need a Twilio account if you want to send a text to your phone (which is just a title and a picture). 
+If you hate Docker, use Ubuntu because the bot is only tested on Ubuntu (16 and 17).
 You also need Docker if you want to containerize the bot. (Docker numba 1)
 
 ## Getting Started
