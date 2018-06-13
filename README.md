@@ -13,12 +13,12 @@ If you hate Docker, use Ubuntu. Bot is only tested on Xenial and Artful.
 First create a file called ``.env``. _The program won't work without it._
 
 * Assign anything other than an empty string to ``DO_THIS_EVERY_DAY`` if you want it to run every day
-* Assign anything other than an empty string to ``DO_THIS_EVERY_DAY`` if you want it to run every day
 * Assign anything other than an empty string to ``RUN_IT_ONCE`` if you want it once before countdown starts
 * Assign anything other than an empty string to ``SEND_SMS`` if you want to activate texting
 * If you choose to activate texting, learn the basics of Twilio and you should be able to fill out ``ACCOUNT_SID`` and ``AUTH_TOKEN``
 * ``TWILIO_TO_NUMBER`` and ``TWILIO_FROM_NUMBER`` are the receiver and sender respectively
 * ``MEH_USER`` could be your email address or username
+* ``MEH_PASS`` is the plain-text string you post on GitHub like everyone else
 ```
 DO_THIS_EVERY_DAY=...
 SEND_SMS=...
@@ -32,8 +32,8 @@ MEH_PASS=...
 ```
 To use the script locally:
 ```shell
-# Theoretically it should work on Python 2 as well
-apt-get update && apt-get install firefox
+# Theoretically it should work on Python 2
+apt-get update && apt-get install firefox # chromium and chrome support coming soon!
 pip3 install -r req.txt
 python3 bot.py
 ```
