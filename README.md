@@ -1,4 +1,4 @@
-# meh-bot
+# Meh Bot
 A pure Python bot that clicks the daily Meh icon and optionally sends a text message to consumer about their product.
 
 ## Sales Pitch
@@ -40,3 +40,6 @@ To build a Docker container on a server:
 sh ./run.sh
 ```
 That's it!
+
+## Paradox
+It's funny because after making Meh Bot I actually went and check Meh every day now. Nevertheless, Meh has earned my loyalty. Maybe they should hire me.
