@@ -37,9 +37,17 @@ SIGNIN_BUTTON_SELECTOR = 'button[class="primary"]'
 # set up cursor
 options = Options()
 options.set_headless(True)
-
 # options.set_headless(False) # for debugging
-browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
+
+choices = ['chromium-browser', 'google-chrome', 'firefox']
+browser_choice = getenv('BROWSER_CHOICE')
+if browser_choice not in choices:
+    browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
+elif browser_choice.lower() == choices[2]:
+    browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
+elif browser_choice.lower() in choices[:2]:
+    options.binary_location = '/usr/bin/' + browser_choice
+    browser = www.Chrome(chrome_options=options, executable_path='./chromedriver')
 
 def send_product_info(browser):
     '''Send pics'''
@@ -117,11 +125,9 @@ def countdown():
     print()
 
 if __name__ == '__main__':
-    if getenv('RUN_BEFORE_COUNTDOWN'):
-        # Run it once when countdown starts
+    if getenv('RUN_IT_ONCE'):
         meh_function()
-
-    if not getenv('DO_THIS_EVERY_DAY') and not getenv('RUN_BEFORE_COUNTDOWN'):
+    elif not getenv('DO_THIS_EVERY_DAY'):
         meh_function()
         browser.quit()
         exit(0)

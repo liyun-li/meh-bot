@@ -1,4 +1,4 @@
-FROM fdsa/meh-bot
+FROM fdsa/meh-bot:firefox
 
 RUN mkdir /meh-bot
 WORKDIR /meh-bot
