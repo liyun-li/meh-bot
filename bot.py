@@ -34,6 +34,13 @@ SIGNIN_USER_ID = 'user'
 SIGNIN_PASS_ID = 'password'
 SIGNIN_BUTTON_SELECTOR = 'button[class="primary"]'
 
+# set up cursor
+options = Options()
+options.set_headless(True)
+
+# options.set_headless(False) # for debugging
+browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
+
 def send_product_info(browser):
     '''Send pics'''
     # twilio credentials
@@ -56,12 +63,7 @@ def send_product_info(browser):
 
 def meh_function():
     '''Does what project is supposed to achieve'''
-    # set up cursor
-    options = Options()
-    options.set_headless(True)
-
-    # options.set_headless(False) # for debugging
-    browser = www.Firefox(firefox_options=options, executable_path='./geckodriver')
+    global browser
 
     # driver wait
     wait = WebDriverWait(browser, 10)  # maximum wait time
@@ -96,24 +98,40 @@ def meh_function():
         if SEND_SMS:
             print('Texting product...')
             send_product_info(browser)
-
     sleep(3)
-    browser.quit()
 
 def seconds_till_tomorrow():
     n = datetime.utcnow() - timedelta(hours=4)
-    print(n)
-    return (23 - n.hour) * 3600 + (59 - n.minute) * 60 + (60 - n.second)
+    return (23 - n.hour) * 3600 + (59 - n.minute) * 60 + (60 - n.second), n
+
+def countdown():
+    sec = seconds_till_tomorrow()
+    print('{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0]), 
+        end='\r', flush=True)
+    sleep(1)
+    while sec[0] > 0:
+        sec = seconds_till_tomorrow()
+        print('{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0]),
+            end='\r', flush=True)
+        sleep(1)
+    print()
 
 if __name__ == '__main__':
-    # Run it once when program starts
-    meh_function()
+    if getenv('RUN_BEFORE_COUNTDOWN'):
+        # Run it once when countdown starts
+        meh_function()
 
-    if not getenv('DO_THIS_EVERY_DAY'):
+    if not getenv('DO_THIS_EVERY_DAY') and not getenv('RUN_BEFORE_COUNTDOWN'):
+        meh_function()
+        browser.quit()
         exit(0)
 
-    while True:
-        sec = seconds_till_tomorrow()
-        print('{} seconds left till tomorrow...'.format(sec))
-        sleep(sec + 10)
-        meh_function()
+    try:
+        while True:
+            countdown()
+            sleep(10)
+            meh_function()
+    except KeyboardInterrupt:
+        print()
+        browser.quit()
+        exit(0)
