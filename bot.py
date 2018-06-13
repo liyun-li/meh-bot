@@ -13,6 +13,11 @@ from os.path import exists
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 
+import sys
+import logging
+
+logging.basicConfig(filename='meh.log',level=logging.DEBUG)
+
 env_path = Path('.') / '.env'
 
 if not exists(env_path):
@@ -87,6 +92,7 @@ def meh_function():
     signin_input_pass = browser.find_element_by_id(SIGNIN_PASS_ID)
 
     print('Signing in...')
+    logging.info('Signing in...')
     signin_input_user.clear()
     signin_input_pass.clear()
     signin_input_user.send_keys(getenv('MEH_USER'))
@@ -100,13 +106,16 @@ def meh_function():
     try:
         browser.find_element_by_css_selector(FLIPPED_SELECTOR)
         print('Icon already flipped')
+        logging.info('Icon already flipped')
     except:
         print('Flipping the flipper')
+        logging.info('Flipping the flipper')
         flipper.click()
     finally: # optional text alert
         SEND_SMS = getenv('SEND_SMS')
         if SEND_SMS:
             print('Texting product...')
+            logging.info('Texting product...')
             send_product_info()
     sleep(3)
 
@@ -116,20 +125,25 @@ def seconds_till_tomorrow():
 
 def countdown():
     sec = seconds_till_tomorrow()
-    print('{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0]), 
-        end='\r', flush=True)
+    p = '{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0])
+    print(p, end='\r', flush=True)
     sleep(1)
     while sec[0] > 0:
         sec = seconds_till_tomorrow()
-        print('{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0]),
-            end='\r', flush=True)
+        p = '{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0])
+        print(p, end='\r', flush=True)
         sleep(1)
     print('\n')
 
+
 if __name__ == '__main__':
     if getenv('RUN_IT_ONCE'):
+        print('Run it once')
+        logging.info('Run it once')
         meh_function()
     elif not getenv('DO_THIS_EVERY_DAY'):
+        print('Run it only once')
+        logging.info('Run it only once')
         meh_function()
         browser.quit()
         exit(0)
@@ -140,10 +154,11 @@ if __name__ == '__main__':
             sleep(10)
             meh_function()
     except KeyboardInterrupt:
-        print()
+        print('\n')
+        logging.info('KeyboardInterrupt')
         browser.quit()
         exit(0)
     except Exception as e:
-        print(e)
+        logging.error(e)
         browser.quit()
         exit(1337)
