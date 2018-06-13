@@ -10,7 +10,7 @@ First You need Python. You also need a Twilio account if you want to send produc
 If you hate Docker, use Ubuntu. Bot is only tested on Xenial and Artful. 
 
 ## Getting Started
-First create a .env. _The program won't work without it._
+First create a file called ``.env``. _The program won't work without it._
 
 * Assign anything other than an empty string to ``DO_THIS_EVERY_DAY`` if you want it to run every day
 * Assign anything other than an empty string to ``DO_THIS_EVERY_DAY`` if you want it to run every day
