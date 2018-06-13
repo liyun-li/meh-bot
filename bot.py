@@ -49,8 +49,10 @@ elif browser_choice.lower() in choices[:2]:
     options.binary_location = '/usr/bin/' + browser_choice
     browser = www.Chrome(chrome_options=options, executable_path='./chromedriver')
 
-def send_product_info(browser):
+def send_product_info():
     '''Send pics'''
+    global browser
+
     # twilio credentials
     ACCOUNT_SID = getenv('TWILIO_ACCOUNT_SID')
     AUTH_TOKEN = getenv('TWILIO_AUTH_TOKEN')
@@ -105,7 +107,7 @@ def meh_function():
         SEND_SMS = getenv('SEND_SMS')
         if SEND_SMS:
             print('Texting product...')
-            send_product_info(browser)
+            send_product_info()
     sleep(3)
 
 def seconds_till_tomorrow():
@@ -122,7 +124,7 @@ def countdown():
         print('{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0]),
             end='\r', flush=True)
         sleep(1)
-    print()
+    print('\n')
 
 if __name__ == '__main__':
     if getenv('RUN_IT_ONCE'):
