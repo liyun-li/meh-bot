@@ -112,6 +112,7 @@ def meh_function():
         browser.quit()
         exit(0)
     except Exception as e:
+        print('\n')
         logging.error(e)
         browser.quit()
         exit(1337)
