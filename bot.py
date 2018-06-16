@@ -163,5 +163,5 @@ if __name__ == '__main__':
         except Exception as e:
             print(e)
             exit(2)
-        sleep(30)
+        sleep(120)
         meh_function()
