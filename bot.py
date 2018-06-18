@@ -59,10 +59,9 @@ def send_product_info(sms_body, img):
 def meh_function():
     '''Does what project is supposed to achieve'''
     try:
-        # set up cursor
+        # browser initialization
         options = Options()
         options.set_headless(True)
-        # options.set_headless(False) # for debugging
 
         choices = ['chromium-browser', 'google-chrome', 'firefox']
         browser_choice = getenv('BROWSER_CHOICE')
@@ -107,12 +106,11 @@ def meh_function():
         logging.info('Flipping the flipper')
         flipper.click()
     except KeyboardInterrupt:
-        print('\n')
         logging.info('KeyboardInterrupt')
         browser.quit()
         exit(0)
     except Exception as e:
-        print('\n')
+        print(e)
         logging.error(e)
         browser.quit()
         exit(1337)
@@ -134,12 +132,13 @@ def seconds_till_tomorrow():
 
 def countdown():
     sec = seconds_till_tomorrow()
-    p = '{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0])
+    f = '{} - {:05d} seconds left till tomorrow...'
+    p = f.format(sec[1], sec[0])
     print(p, end='\r', flush=True)
     sleep(1)
-    while sec[0] > 0:
+    while sec[0] >= 0:
         sec = seconds_till_tomorrow()
-        p = '{} - {:05d} seconds left till tomorrow...'.format(sec[1], sec[0])
+        p = f.format(sec[1], sec[0])
         print(p, end='\r', flush=True)
         sleep(1)
     print('\n')
@@ -157,11 +156,8 @@ if __name__ == '__main__':
         exit(0)
 
     while True:
-        try:
-            countdown()
-            sleep(5)
-        except Exception as e:
-            print(e)
-            exit(2)
+        countdown()
+        print('Sleep another 120 seconds to avoid traffic')
         sleep(120)
+        print('Meh time!')
         meh_function()
