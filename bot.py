@@ -42,10 +42,12 @@ class Meh:
         self.logger.setLevel(logging.INFO)
 
         # create handlers
-        # stream_handler = logging.StreamHandler()
-        # stream_handler.setLevel(logging.INFO)
         file_handler = logging.FileHandler('meh.log')
         file_handler.setLevel(logging.INFO)
+
+        # custom timezone
+        converter = lambda x, y: (datetime.utcnow() - timedelta(hours=4)).timetuple()
+        logging.Formatter.converter = converter
 
         # create a logging format
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
@@ -53,7 +55,6 @@ class Meh:
 
         # add the handlers to the self.logger
         self.logger.addHandler(file_handler)
-        # self.logger.addHandler(stream_handler)
 
         # browser initialization
         options = Options()
@@ -105,12 +106,12 @@ class Meh:
         # Texting
         logging.info('Texting product...')
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
-        message = client.messages.create(
-            to=TO_NUMBER,
-            from_=FROM_NUMBER,
-            body=sms_body,
-            media_url=img
-        )
+        # message = client.messages.create(
+            # to=TO_NUMBER,
+            # from_=FROM_NUMBER,
+            # body=sms_body,
+            # media_url=img
+        # )
 
         return 0
 
@@ -177,6 +178,12 @@ class Meh:
         self.homepage()
         self.login()
         self.flip()
+
+    def customTime(*args):
+        utc_dt = utc.localize(datetime.utcnow())
+        my_tz = timezone("US/Eastern")
+        converted = utc_dt.astimezone(my_tz)
+        return converted.timetuple()
 
 def seconds_till_tomorrow():
     '''Count the seconds until midnight'''
