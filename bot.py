@@ -104,7 +104,7 @@ class Meh:
         FROM_NUMBER = getenv('TWILIO_FROM_NUMBER')
 
         # Texting
-        logger.info('Texting product...')
+        self.logger.info('Texting product...')
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
         message = client.messages.create(
             to=TO_NUMBER,
