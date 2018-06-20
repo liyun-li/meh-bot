@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 docker build . -t meh-bot --no-cache
 docker rm -f meh-bot 2>/dev/null
