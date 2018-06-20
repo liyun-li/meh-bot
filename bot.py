@@ -104,14 +104,14 @@ class Meh:
         FROM_NUMBER = getenv('TWILIO_FROM_NUMBER')
 
         # Texting
-        logging.info('Texting product...')
+        logger.info('Texting product...')
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
-        # message = client.messages.create(
-            # to=TO_NUMBER,
-            # from_=FROM_NUMBER,
-            # body=sms_body,
-            # media_url=img
-        # )
+        message = client.messages.create(
+            to=TO_NUMBER,
+            from_=FROM_NUMBER,
+            body=sms_body,
+            media_url=img
+        )
 
         return 0
 
