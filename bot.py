@@ -225,5 +225,5 @@ if __name__ == '__main__':
     while True:
         countdown()
         self.logger.info('Countdown is over. Wait 30 seconds...')
-        sleep(30) # to avoid high traffic
+        sleep(120) # to avoid high traffic
         meh.midnight_fun()
