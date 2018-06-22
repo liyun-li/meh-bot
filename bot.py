@@ -89,7 +89,7 @@ class Meh:
         '''Send pics and title'''
         SEND_SMS = getenv('SEND_SMS')
         if not SEND_SMS:
-            logging.info('Texting not configured')
+            self.logger.info('Texting not configured')
             return 1
 
         # construct message body
@@ -224,6 +224,6 @@ if __name__ == '__main__':
 
     while True:
         countdown()
-        self.logger.info('Countdown is over. Wait 30 seconds...')
+        meh.logger.info('Countdown is over. Wait 30 seconds...')
         sleep(120) # to avoid high traffic
         meh.midnight_fun()
