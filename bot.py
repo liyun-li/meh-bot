@@ -19,7 +19,6 @@ import logging
 # load ".env" file
 load_dotenv(dotenv_path='.env')
 
-
 class Meh:
     '''Everything you need in for clicking'''
     # home page
@@ -82,7 +81,7 @@ class Meh:
             exit(1) # shit happens
 
         # driver wait
-        self.wait = WebDriverWait(self.browser, 10)  # maximum wait time
+        self.wait = WebDriverWait(self.browser, 60)  # maximum wait time
         self.logged_in = False
 
     def text(self):
@@ -225,5 +224,5 @@ if __name__ == '__main__':
     while True:
         countdown()
         meh.logger.info('Countdown is over. Wait 30 seconds...')
-        sleep(120) # to avoid high traffic
+        sleep(150) # to avoid high traffic
         meh.midnight_fun()
