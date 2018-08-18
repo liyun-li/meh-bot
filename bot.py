@@ -94,7 +94,7 @@ class Meh:
         self.wait = WebDriverWait(self.browser, 60)  # maximum wait time
         self.logged_in = False
 
-    def text_product(elf):
+    def text_product(self):
         '''Send pics and title'''
         SEND_SMS = getenv('SEND_SMS')
         if not SEND_SMS:
