@@ -53,11 +53,17 @@ class Meh:
 
         # create a logging format
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+            '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+        )
         file_handler.setFormatter(formatter)
 
         # add the handlers to the self.logger
         self.logger.addHandler(file_handler)
+
+        if not exists('.env'):
+            print('You don\'t have a .env file')
+            self.logger.info('You don\'t have a .env file')
+            exit(1)
 
         # browser initialization
         options = Options()
@@ -243,10 +249,6 @@ def countdown():
     print()
 
 if __name__ == '__main__':
-    if not exists('.env'):
-        self.logger.info('You don\'t have a .env file')
-        exit(1)
-
     # wait time
     wait_time = 240
 
