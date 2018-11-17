@@ -226,9 +226,33 @@ class Meh:
         return converted.timetuple()
 
 
+def dst():
+    ''' I don't trust the Python's native check '''
+    ''' Returns the hour difference between EST and UTC '''
+
+    n = datetime.utcnow()
+    month = n.month
+
+    if month < 3 or month > 11:
+        return 5
+    if month > 3 and month < 11:
+        return 4
+
+    day_of_week = n.weekday() + 1  # monday is 0
+    last_sunday = n.day - day_of_week
+
+    # In march, we are DST if our previous sunday was on or after the 8th.
+    if month == 3:
+        return 4 if last_sunday >= 8 else 5
+
+    # In november we must be before the first sunday to be dst.
+    # That means the previous sunday must be before the 1st.
+    return 4 if last_sunday <= 0 else 5
+
+
 def seconds_till_tomorrow():
     '''Count the seconds until midnight'''
-    n = datetime.utcnow() - timedelta(hours=4)
+    n = datetime.utcnow() - timedelta(hours=dst())
     return (23 - n.hour) * 3600 + (59 - n.minute) * 60 + (60 - n.second), n
 
 
