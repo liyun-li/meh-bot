@@ -1,27 +1,25 @@
-from selenium import webdriver as www
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException as NSE
-from selenium.common.exceptions import ElementNotInteractableException as ENI
-
+import logging
+import sys
+from datetime import datetime, timedelta, timezone
 from os import getenv
 from os.path import exists
-from twilio.rest import Client
-from datetime import datetime, timedelta, timezone
-from time import sleep, time, mktime
-from dotenv import load_dotenv
+from time import mktime, sleep, time
 
-import sys
-import logging
+from dotenv import load_dotenv
+from selenium import webdriver as www
+from selenium.common.exceptions import ElementNotInteractableException as ENI
+from selenium.common.exceptions import NoSuchElementException as NSE
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from twilio.rest import Client
 
 # load ".env" file
 load_dotenv(dotenv_path='.env')
 
 
 class Meh:
-
     '''Everything you need in for clicking'''
     # home page
     FLIPPER_SELECTOR = 'div[class="flipper"] button'
@@ -47,8 +45,9 @@ class Meh:
         file_handler.setLevel(logging.INFO)
 
         # custom timezone
-        converter = lambda x, y: (
-            datetime.utcnow() - timedelta(hours=4)).timetuple()
+        def converter(x, y):
+            return (datetime.utcnow() - timedelta(hours=4)).timetuple()
+
         logging.Formatter.converter = converter
 
         # create a logging format
@@ -91,7 +90,7 @@ class Meh:
             exit(1)  # shit happens
 
         # driver wait
-        self.wait = WebDriverWait(self.browser, 60)  # maximum wait time
+        self.wait = WebDriverWait(self.browser, 300)  # maximum wait time
         self.logged_in = False
 
     def text_product(self):
@@ -229,7 +228,6 @@ class Meh:
 
 def seconds_till_tomorrow():
     '''Count the seconds until midnight'''
-    global asdf
     n = datetime.utcnow() - timedelta(hours=4)
     return (23 - n.hour) * 3600 + (59 - n.minute) * 60 + (60 - n.second), n
 
@@ -248,9 +246,10 @@ def countdown():
         sleep(1)
     print()
 
+
 if __name__ == '__main__':
     # wait time
-    wait_time = 240
+    wait_time = 30
 
     # Meh wrapper
     meh = Meh()
@@ -268,5 +267,4 @@ if __name__ == '__main__':
         countdown()
         meh.logger.info(
             'Countdown is over. Wait {} seconds...'.format(wait_time))
-        sleep(wait_time)  # to avoid high traffic
         meh.midnight_fun()
